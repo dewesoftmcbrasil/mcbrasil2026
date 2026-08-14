@@ -93,6 +93,9 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 .pt tbody td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--dim);vertical-align:top}
 .pt tbody tr:last-child td{border-bottom:none}
 .pt tbody tr.brk td{background:#1C1A18;color:var(--or)}
+.pt tbody tr.brk td b{color:var(--or)}
+.pt tbody tr.brk .t{color:var(--or);font-weight:800}
+.pt tbody tr.brk .ev{color:var(--or)}
 .pt .t{font-weight:800;color:var(--paper);white-space:nowrap;font-size:12.5px}
 .pt .ev b{color:var(--paper);font-weight:700;display:block;margin-bottom:1px}
 .pt .ev .sub{color:var(--dim);font-size:12px}
@@ -299,14 +302,15 @@ footer{padding:36px 0 24px;border-top:1px solid var(--line)}
           <tr><td class="t">09:00–09:15</td><td class="ev"><b>ABERTURA OFICIAL</b><div class="sub">Denison Oliveira / Primoz Rome</div></td></tr>
           <tr><td class="t">09:15–10:00</td><td class="ev"><b>KEYNOTE — OpenDAQ &amp; Dewesoft Roadmap</b><div class="sub">Jure Knez — President Dewesoft</div></td></tr>
           <tr><td class="t">10:00–10:45</td><td class="ev"><b>KEYNOTE — Standalone DAQ Systems and Hardware Platforms</b><div class="sub">Eva Kalsek — DewesoftX &amp; Edge devices product manager</div></td></tr>
-          <tr><td class="t">10:45–11:30</td><td class="ev"><b>KEYNOTE — Automotive Applications</b><div class="sub">Matjaz Strnisa — Vehicle Application Engineer</div></td></tr>
-          <tr><td class="t">11:30–12:15</td><td class="ev"><b>KEYNOTE — NVH Applications</b><div class="sub">Soren Linnet — NVH Application Engineer</div></td></tr>
-          <tr class="brk"><td class="t">12:15–14:00</td><td class="ev"><b>Almoço</b><div class="sub">Restaurante do hotel</div></td></tr>
+          <tr class="brk"><td class="t">10:45–11:00</td><td class="ev"><b>Coffee Break</b></td></tr>
+          <tr><td class="t">11:00–11:45</td><td class="ev"><b>KEYNOTE — Automotive Applications</b><div class="sub">Matjaz Strnisa — Vehicle Application Engineer</div></td></tr>
+          <tr><td class="t">11:45–12:30</td><td class="ev"><b>KEYNOTE — NVH Applications</b><div class="sub">Soren Linnet — NVH Application Engineer</div></td></tr>
+          <tr class="brk"><td class="t">12:30–14:00</td><td class="ev"><b>Almoço / Lunch</b><div class="sub">Restaurante do hotel</div></td></tr>
           <tr><td class="t">14:00–14:45</td><td class="ev"><b>KEYNOTE — Power Applications</b><div class="sub">Teo Podlesnik — Power Application Engineer</div></td></tr>
-          <tr><td class="t">14:45–15:30</td><td class="ev"><b>ESTUDO DE CASO — ADAS Testes de Validação</b><div class="sub">À confirmar</div></td></tr>
-          <tr><td class="t">15:30–16:15</td><td class="ev"><b>ESTUDO DE CASO — Durabilidade</b><div class="sub">À confirmar</div></td></tr>
+          <tr><td class="t">14:45–15:30</td><td class="ev"><b>ESTUDO DE CASO — ADAS Testes de Validação</b><div class="sub">TBC</div></td></tr>
+          <tr><td class="t">15:30–16:15</td><td class="ev"><b>ESTUDO DE CASO — Durabilidade</b><div class="sub">TBC</div></td></tr>
           <tr class="brk"><td class="t">16:15–16:30</td><td class="ev"><b>Coffee Break</b></td></tr>
-          <tr><td class="t">16:30–17:10</td><td class="ev"><b>ESTUDO DE CASO — Power Analysis</b><div class="sub">À confirmar</div></td></tr>
+          <tr><td class="t">16:30–17:10</td><td class="ev"><b>ESTUDO DE CASO — Power Analysis</b><div class="sub">TBC</div></td></tr>
           <tr class="brk"><td class="t">18:30–21:30</td><td class="ev"><b>Coquetel / Social Evening</b><div class="sub">Open bar · networking</div></td></tr>
         </tbody>
       </table>
@@ -327,22 +331,26 @@ footer{padding:36px 0 24px;border-top:1px solid var(--line)}
           </tr>
         </thead>
         <tbody>
+          <tr class="brk">
+            <td class="t">08:00–09:00</td>
+            <td colspan="4" style="text-align:center"><b>Welcome Coffee + Credenciamento</b></td>
+          </tr>
           <tr>
-            <td class="t">09:00–09:45</td>
+            <td class="t">09:15–10:00</td>
             <td>Fundamentals of acoustics</td>
             <td>Electrical power basics: voltage and current measurement</td>
             <td>DewesoftX básico</td>
             <td>Structural health monitoring</td>
           </tr>
           <tr>
-            <td class="t">09:45–10:30</td>
+            <td class="t">10:00–10:45</td>
             <td>FFT Analysis</td>
             <td>Electrical Power Advanced</td>
             <td>DewesoftX tips and tricks (Advanced)</td>
             <td>HISTORIAN &amp; NEMOSENSE</td>
           </tr>
           <tr class="brk">
-            <td class="t">10:30–11:00</td>
+            <td class="t">10:45–11:00</td>
             <td colspan="4" style="text-align:center"><b>Coffee Break</b></td>
           </tr>
           <tr>
@@ -378,11 +386,11 @@ footer{padding:36px 0 24px;border-top:1px solid var(--line)}
             <td>New Dewesoft DAQ systems</td>
           </tr>
           <tr class="brk">
-            <td class="t">15:30–16:00</td>
+            <td class="t">15:30–16:15</td>
             <td colspan="4" style="text-align:center"><b>Coffee Break</b></td>
           </tr>
           <tr>
-            <td class="t">16:00–16:45</td>
+            <td class="t">16:30–17:10</td>
             <td>Strain and stress measurement</td>
             <td>Automotive buses overview</td>
             <td>DewesoftX Sequencer</td>
