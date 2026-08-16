@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEWESoft MC Brasil 2026 — Dashboard</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ─── TOKENS ─── */
+:root {
+  --ds-black:    #232323;
+  --ds-orange:   #F15D2D;
+  --ds-silver:   #A7A7A7;
+  --ds-graphite: #404040;
+  --bg:          #141414;
+  --surface:     #1E1E1E;
+  --surface2:    #272727;
+  --border:      #303030;
+  --text:        #F0F0F0;
+  --text2:       #A7A7A7;
+  --text3:       #606060;
+  --green:       #3DAA6B;
+  --green-lt:    rgba(61,170,107,.12);
+  --amber:       #E5A020;
+  --amber-lt:    rgba(229,160,32,.12);
+  --red:         #D94040;
+  --red-lt:      rgba(217,64,64,.12);
+  --or-lt:       rgba(241,93,45,.12);
+  --or-glow:     rgba(241,93,45,.18);
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ─── TOPBAR ─── */
+.topbar {
+  background: var(--ds-black);
+  border-bottom: 2px solid var(--ds-orange);
+  padding: 0 28px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.topbar-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--ds-orange);
+}
+.topbar-divider { width: 1px; height: 24px; background: var(--border); }
+.topbar-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ds-silver);
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.topbar-date {
+  font-size: 12px;
+  color: var(--text3);
+  font-weight: 500;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(61,170,107,.25); }
+  50%       { box-shadow: 0 0 0 6px rgba(61,170,107,.05); }
+}
+
+/* ─── COUNTDOWN BANNER ─── */
+.countdown-band {
+  background: var(--ds-orange);
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.cd-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cd-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.65);
+}
+.cd-big {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 56px;
+  line-height: 1;
+  color: #fff;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.cd-unit-lbl {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255,255,255,.7);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.cd-divider {
+  width: 1px;
+  height: 44px;
+  background: rgba(255,255,255,.25);
+  flex-shrink: 0;
+}
+.cd-right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cd-date {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: #fff;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.cd-venue {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,.75);
+  letter-spacing: .01em;
+}
+
+/* ─── LAYOUT ─── */
+.page { max-width: 1280px; margin: 0 auto; padding: 28px 24px 60px; }
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ds-orange);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ─── KPI GRID ─── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+@media (max-width: 900px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .kpi-grid { grid-template-columns: 1fr; } }
+
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 22px 18px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.kpi:hover { border-color: var(--ds-graphite); }
+.kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--kpi-accent, var(--ds-orange));
+}
+.kpi-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.kpi-value .unit {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text2);
+  margin-left: 2px;
+}
+.kpi-sub {
+  font-size: 11.5px;
+  color: var(--text2);
+  font-weight: 500;
+}
+.kpi-icon {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 22px;
+  opacity: .35;
+}
+
+/* KPI com progress bar (inscritos) */
+.kpi-progress-wrap {
+  margin-top: 14px;
+}
+.kpi-progress-track {
+  height: 5px;
+  background: var(--surface2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.kpi-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ds-orange);
+  transition: width .8s cubic-bezier(.4,0,.2,1);
+}
+.kpi-progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-size: 10.5px;
+  color: var(--text3);
+}
+
+/* ─── MAIN ROW ─── */
+.main-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+@media (max-width: 900px) { .main-row { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .main-row { grid-template-columns: 1fr; } }
+
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+@media (max-width: 760px) { .bottom-row { grid-template-columns: 1fr; } }
+
+/* ─── CARD ─── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.card-head {
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.card-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--or-lt);
+  color: var(--ds-orange);
+  white-space: nowrap;
+}
+.card-badge.green { background: var(--green-lt); color: var(--green); }
+.card-badge.amber { background: var(--amber-lt); color: var(--amber); }
+.card-body { padding: 18px; }
+
+/* ─── STATUS TASKS ─── */
+.status-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.status-item {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.status-dot.concluido  { background: var(--green); }
+.status-dot.andamento  { background: var(--ds-orange); }
+.status-dot.aguardando { background: var(--amber); }
+.status-dot.afazer     { background: var(--text3); }
+.status-dot.cancelado  { background: var(--red); }
+.status-info .num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--text);
+}
+.status-info .lbl {
+  font-size: 11px;
+  color: var(--text2);
+  font-weight: 500;
+}
+.task-total-bar {
+  margin-top: 14px;
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+}
+.task-total-bar .seg {
+  height: 100%;
+  transition: width .6s ease;
+}
+
+/* ─── BUDGET ─── */
+.budget-items { display: flex; flex-direction: column; gap: 8px; }
+.budget-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.budget-row .b-label {
+  font-size: 12px;
+  color: var(--text2);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.budget-row .b-track {
+  flex: 2;
+  height: 5px;
+  background: var(--surface2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.budget-row .b-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ds-orange);
+}
+.budget-row .b-val {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: right;
+  min-width: 80px;
+}
+.budget-total {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.budget-total .lbl { font-size: 12px; color: var(--text2); font-weight: 600; }
+.budget-total .val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--ds-orange);
+}
+.budget-sinal {
+  margin-top: 8px;
+  background: var(--green-lt);
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.budget-sinal .ls { font-size: 11.5px; color: var(--green); font-weight: 600; }
+.budget-sinal .rs {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--green);
+}
+
+/* ─── COMPANIES LIST ─── */
+.company-list { display: flex; flex-direction: column; gap: 6px; }
+.company-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--surface2);
+  border-radius: 7px;
+}
+.company-row .c-badge {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ds-orange);
+  background: var(--or-lt);
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.company-row .c-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.company-row .c-role {
+  font-size: 11px;
+  color: var(--text3);
+  margin-left: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── SPEAKERS ─── */
+.speakers-list { display: flex; flex-direction: column; gap: 6px; }
+.speaker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--surface2);
+  border-radius: 7px;
+}
+.speaker-initial {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ds-graphite);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ds-orange);
+  flex-shrink: 0;
+}
+.speaker-info .s-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+.speaker-info .s-role {
+  font-size: 11px;
+  color: var(--text3);
+}
+.speaker-status {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.speaker-status.confirmed { background: var(--green-lt); color: var(--green); }
+.speaker-status.tbc       { background: var(--amber-lt); color: var(--amber); }
+
+/* ─── CANAIS ─── */
+.canal-list { display: flex; flex-direction: column; gap: 6px; }
+.canal-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.canal-row .c-name {
+  font-size: 12px;
+  color: var(--text2);
+  width: 130px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.canal-row .c-track {
+  flex: 1;
+  height: 5px;
+  background: var(--surface2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.canal-row .c-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ds-orange);
+  opacity: .75;
+}
+.canal-row .c-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  width: 20px;
+  text-align: right;
+}
+
+/* ─── RESTRICOES ─── */
+.restr-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.restr-pill {
+  flex: 1;
+  background: var(--surface2);
+  border-radius: 7px;
+  padding: 10px 14px;
+  text-align: center;
+}
+.restr-pill .rp-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text);
+}
+.restr-pill .rp-lbl {
+  font-size: 10.5px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+/* ─── PRÓXIMAS TAREFAS ─── */
+.task-list { display: flex; flex-direction: column; gap: 0; }
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+}
+.task-item:last-child { border-bottom: none; }
+.task-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.task-dot.andamento  { background: var(--ds-orange); }
+.task-dot.aguardando { background: var(--amber); }
+.task-dot.afazer     { background: var(--text3); }
+.task-content { flex: 1; min-width: 0; }
+.task-content .t-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.task-content .t-fase {
+  font-size: 10.5px;
+  color: var(--text3);
+}
+.task-status {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.task-status.andamento  { background: var(--or-lt); color: var(--ds-orange); }
+.task-status.aguardando { background: var(--amber-lt); color: var(--amber); }
+.task-status.afazer     { background: var(--surface2); color: var(--text3); }
+
+/* ─── FOOTER ─── */
+.dash-footer {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dash-footer .fl {
+  font-size: 11px;
+  color: var(--text3);
+}
+.dash-footer .fl span { color: var(--ds-orange); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">DEWESoft</div>
+    <div class="topbar-divider"></div>
+    <div class="topbar-title">Measurement Conference Brasil 2026 — Dashboard</div>
+  </div>
+
+</div>
+
+<!-- COUNTDOWN BAND -->
+<div class="countdown-band">
+  <div class="cd-left">
+    <div class="cd-eyebrow">Faltam para o evento</div>
+    <div class="cd-big"><span id="cd-dias">—</span><span class="cd-unit-lbl">dias</span></div>
+  </div>
+  <div class="cd-divider"></div>
+  <div class="cd-right">
+    <div class="cd-date">29–30 SET 2026</div>
+    <div class="cd-venue">Vitória Hotel Convention · Indaiatuba, SP</div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ── KPIs principais ── -->
+  <div class="section-label">Visão geral</div>
+  <div class="kpi-grid">
+
+    <!-- Inscritos -->
+    <div class="kpi" style="--kpi-accent: var(--ds-orange);">
+      <div class="kpi-icon">👥</div>
+      <div class="kpi-eyebrow">Inscritos</div>
+      <div class="kpi-value" id="kpi-inscritos-val">14<span class="unit"> / 150</span></div>
+      <div class="kpi-sub">Meta: 150 participantes</div>
+      <div class="kpi-progress-wrap">
+        <div class="kpi-progress-track">
+          <div class="kpi-progress-fill" id="kpi-inscritos-bar" style="width: 9.3%"></div>
+        </div>
+        <div class="kpi-progress-label">
+          <span id="kpi-inscritos-pct">9.3% atingido</span>
+          <span id="kpi-inscritos-rest">136 vagas restantes</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Budget estimado -->
+    <div class="kpi" style="--kpi-accent: var(--green);">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-eyebrow">Orçamento estimado</div>
+      <div class="kpi-value" id="kpi-orcamento-val" style="font-size:32px;">R$ 198.726</div>
+      <div class="kpi-sub">Vitória Hotel Convention · Indaiatuba</div>
+    </div>
+
+    <!-- Sinal pago -->
+    <div class="kpi" style="--kpi-accent: var(--amber);">
+      <div class="kpi-icon">🧾</div>
+      <div class="kpi-eyebrow">Sinal pago ao hotel</div>
+      <div class="kpi-value" id="kpi-sinal-val" style="font-size:32px;">R$ 41.650</div>
+      <div class="kpi-sub">Contrato nº 16490 · Sinal de 50%</div>
+      <div class="kpi-progress-wrap">
+        <div class="kpi-progress-track">
+          <div class="kpi-progress-fill" style="width: 50%; background: var(--amber)"></div>
+        </div>
+        <div class="kpi-progress-label">
+          <span>50% pago</span>
+          <span>R$ 41.650 restante</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── ROW 1: Tarefas + Budget ── -->
+  <div class="section-label">Operacional</div>
+  <div class="main-row" style="grid-template-columns: 1fr 1fr;">
+
+    <!-- Status das tarefas -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Status das tarefas</div>
+        <div class="card-badge" id="cl-total">220 itens</div>
+      </div>
+      <div class="card-body">
+        <div class="status-grid">
+          <div class="status-item">
+            <div class="status-dot concluido"></div>
+            <div class="status-info">
+              <div class="num" id="cl-concluidos">18</div>
+              <div class="lbl">Concluídos</div>
+            </div>
+          </div>
+          <div class="status-item">
+            <div class="status-dot andamento"></div>
+            <div class="status-info">
+              <div class="num" id="cl-andamento">13</div>
+              <div class="lbl">Em andamento</div>
+            </div>
+          </div>
+          <div class="status-item">
+            <div class="status-dot aguardando"></div>
+            <div class="status-info">
+              <div class="num" id="cl-aguardando">3</div>
+              <div class="lbl">Aguardando</div>
+            </div>
+          </div>
+          <div class="status-item">
+            <div class="status-dot afazer"></div>
+            <div class="status-info">
+              <div class="num" id="cl-afazer">51</div>
+              <div class="lbl">A fazer</div>
+            </div>
+          </div>
+          <div class="status-item" style="grid-column: span 2">
+            <div class="status-dot cancelado"></div>
+            <div class="status-info">
+              <div class="num" id="cl-cancelado">1</div>
+              <div class="lbl">Cancelado</div>
+            </div>
+          </div>
+        </div>
+        <!-- barra proporcional -->
+        <div class="task-total-bar">
+          <div class="seg" id="bar-concluidos" style="width:8.2%; background:var(--green);"></div>
+          <div class="seg" id="bar-andamento"  style="width:5.9%; background:var(--ds-orange);"></div>
+          <div class="seg" id="bar-aguardando" style="width:1.4%; background:var(--amber);"></div>
+          <div class="seg" id="bar-cancelado"  style="width:0.5%; background:var(--red);"></div>
+          <div class="seg" id="bar-afazer"     style="width:23.2%; background:var(--text3); opacity:.4;"></div>
+        </div>
+        <div id="cl-pct-label" style="font-size:10.5px; color:var(--text3); margin-top:6px;">
+          8.2% concluído · 61.4% sem status
+        </div>
+      </div>
+    </div>
+
+    <!-- Budget por categoria -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Budget por categoria</div>
+        <div class="card-badge amber">R$ 198.726</div>
+      </div>
+      <div class="card-body">
+        <div class="budget-items">
+          <div class="budget-row">
+            <div class="b-label">Alimentação</div>
+            <div class="b-track"><div class="b-fill" id="b-alim-bar" style="width:77.4%"></div></div>
+            <div class="b-val" id="b-alim-val">R$ 153.800</div>
+          </div>
+          <div class="budget-row">
+            <div class="b-label">Salas</div>
+            <div class="b-track"><div class="b-fill" id="b-salas-bar" style="width:16.8%"></div></div>
+            <div class="b-val" id="b-salas-val">R$ 33.300</div>
+          </div>
+          <div class="budget-row">
+            <div class="b-label">Hospedagem</div>
+            <div class="b-track"><div class="b-fill" id="b-hosp-bar" style="width:3.5%"></div></div>
+            <div class="b-val" id="b-hosp-val">R$ 6.960</div>
+          </div>
+          <div class="budget-row">
+            <div class="b-label">Extras</div>
+            <div class="b-track"><div class="b-fill" id="b-extras-bar" style="width:2.3%"></div></div>
+            <div class="b-val" id="b-extras-val">R$ 4.667</div>
+          </div>
+          <div class="budget-row">
+            <div class="b-label">Equipamentos</div>
+            <div class="b-track"><div class="b-fill" style="width:0%"></div></div>
+            <div class="b-val" style="color:var(--text3)">TBC</div>
+          </div>
+        </div>
+        <div class="budget-total">
+          <div class="lbl">Total estimado</div>
+          <div class="val" id="b-total-val">R$ 198.726</div>
+        </div>
+        <div class="budget-sinal">
+          <div class="ls">✓ Sinal pago ao hotel (50%)</div>
+          <div class="rs" id="b-sinal-val">R$ 41.650</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── ROW 2: Empresas + Palestrantes + Canal captação ── -->
+  <div class="section-label">Inscrições e conteúdo</div>
+  <div class="main-row">
+
+    <!-- Empresas inscritas -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Empresas inscritas</div>
+        <div class="card-badge green">14 nomes</div>
+      </div>
+      <div class="card-body">
+        <div class="company-list">
+          <div class="company-row">
+            <div class="c-badge">Auto</div>
+            <div class="c-name">Volkswagen Truck &amp; Bus</div>
+            <div class="c-role">Eng. Produto</div>
+          </div>
+          <div class="company-row">
+            <div class="c-badge">Auto</div>
+            <div class="c-name">Mercedes-Benz do Brasil</div>
+            <div class="c-role">Eng. NVH</div>
+          </div>
+          <div class="company-row">
+            <div class="c-badge">Auto</div>
+            <div class="c-name">TRATON R&amp;D Brazil</div>
+            <div class="c-role">Eng. Produto</div>
+          </div>
+          <div class="company-row">
+            <div class="c-badge">Auto</div>
+            <div class="c-name">Pirelli (×2)</div>
+            <div class="c-role">Eng. Testes</div>
+          </div>
+          <div class="company-row">
+            <div class="c-badge">Auto</div>
+            <div class="c-name">IAV do Brasil</div>
+            <div class="c-role">Analista Testes</div>
+          </div>
+          <div class="company-row">
+            <div class="c-badge">Ind</div>
+            <div class="c-name">John Deere</div>
+            <div class="c-role">Engenheiro</div>
+          </div>
+          <div class="company-row">
+            <div class="c-badge">Ind</div>
+            <div class="c-name">WEG Equipamentos</div>
+            <div class="c-role">Técnico</div>
+          </div>
+          <div class="company-row">
+            <div class="c-badge">Aero</div>
+            <div class="c-name">Embraer</div>
+            <div class="c-role">Téc. Ensaios</div>
+          </div>
+          <div class="company-row">
+            <div class="c-badge">Acad</div>
+            <div class="c-name">ITA</div>
+            <div class="c-role">Professor</div>
+          </div>
+          <div class="company-row">
+            <div class="c-badge">Acad</div>
+            <div class="c-name">Mackenzie</div>
+            <div class="c-role">Prof. &amp; Pesq.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Palestrantes confirmados -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Palestrantes</div>
+        <div class="card-badge green">7 confirmados</div>
+      </div>
+      <div class="card-body">
+        <div class="speakers-list">
+          <div class="speaker-row">
+            <div class="speaker-initial">JK</div>
+            <div class="speaker-info">
+              <div class="s-name">Jure Knez</div>
+              <div class="s-role">President, Dewesoft</div>
+            </div>
+            <div class="speaker-status confirmed">Confirmado</div>
+          </div>
+          <div class="speaker-row">
+            <div class="speaker-initial">EK</div>
+            <div class="speaker-info">
+              <div class="s-name">Eva Kalsek</div>
+              <div class="s-role">Hardware Platforms</div>
+            </div>
+            <div class="speaker-status confirmed">Confirmado</div>
+          </div>
+          <div class="speaker-row">
+            <div class="speaker-initial">MS</div>
+            <div class="speaker-info">
+              <div class="s-name">Matjaz Strnisa</div>
+              <div class="s-role">Automotive</div>
+            </div>
+            <div class="speaker-status confirmed">Confirmado</div>
+          </div>
+          <div class="speaker-row">
+            <div class="speaker-initial">SL</div>
+            <div class="speaker-info">
+              <div class="s-name">Soren Linnet</div>
+              <div class="s-role">NVH</div>
+            </div>
+            <div class="speaker-status confirmed">Confirmado</div>
+          </div>
+          <div class="speaker-row">
+            <div class="speaker-initial">TP</div>
+            <div class="speaker-info">
+              <div class="s-name">Teo Podlesnik</div>
+              <div class="s-role">Power</div>
+            </div>
+            <div class="speaker-status confirmed">Confirmado</div>
+          </div>
+          <div class="speaker-row">
+            <div class="speaker-initial">DO</div>
+            <div class="speaker-info">
+              <div class="s-name">Denison Oliveira</div>
+              <div class="s-role">Abertura oficial</div>
+            </div>
+            <div class="speaker-status confirmed">Confirmado</div>
+          </div>
+          <div class="speaker-row">
+            <div class="speaker-initial">PR</div>
+            <div class="speaker-info">
+              <div class="s-name">Primoz Rome</div>
+              <div class="s-role">Abertura oficial</div>
+            </div>
+            <div class="speaker-status confirmed">Confirmado</div>
+          </div>
+          <div class="speaker-row">
+            <div class="speaker-initial">?</div>
+            <div class="speaker-info">
+              <div class="s-name">Casos de uso ADAS / Durabilidade</div>
+              <div class="s-role">Estudo de caso</div>
+            </div>
+            <div class="speaker-status tbc">TBC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Canal de captação -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Canal de captação</div>
+        <div class="card-badge">14 respostas</div>
+      </div>
+      <div class="card-body">
+        <div class="canal-list">
+          <div class="canal-row">
+            <div class="c-name">E-mail</div>
+            <div class="c-track"><div class="c-fill" style="width:40%"></div></div>
+            <div class="c-count">4</div>
+          </div>
+          <div class="canal-row">
+            <div class="c-name">LinkedIn</div>
+            <div class="c-track"><div class="c-fill" style="width:20%"></div></div>
+            <div class="c-count">2</div>
+          </div>
+          <div class="canal-row">
+            <div class="c-name">Indicação</div>
+            <div class="c-track"><div class="c-fill" style="width:20%"></div></div>
+            <div class="c-count">2</div>
+          </div>
+          <div class="canal-row">
+            <div class="c-name">Newsletter</div>
+            <div class="c-track"><div class="c-fill" style="width:10%"></div></div>
+            <div class="c-count">1</div>
+          </div>
+          <div class="canal-row">
+            <div class="c-name">Representante</div>
+            <div class="c-track"><div class="c-fill" style="width:10%"></div></div>
+            <div class="c-count">1</div>
+          </div>
+          <div class="canal-row">
+            <div class="c-name">Outros</div>
+            <div class="c-track"><div class="c-fill" style="width:40%"></div></div>
+            <div class="c-count">4</div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <div class="card-title" style="font-size:11px; color:var(--text2); margin-bottom:10px;">Restrições alimentares</div>
+          <div class="restr-row">
+            <div class="restr-pill">
+              <div class="rp-num" style="color:var(--green)" id="insc-coquetel">13</div>
+              <div class="rp-lbl">Confirmados coquetel</div>
+            </div>
+            <div class="restr-pill">
+              <div class="rp-num" style="color:var(--amber)" id="insc-restricoes">1</div>
+              <div class="rp-lbl">Com restrição alimentar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── ROW 3: Tarefas em destaque ── -->
+  <div class="section-label">Tarefas em aberto</div>
+  <div class="bottom-row">
+
+    <!-- Tarefas em andamento / aguardando -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Em andamento e aguardando</div>
+        <div class="card-badge amber">16 itens ativos</div>
+      </div>
+      <div class="card-body">
+        <div class="task-list">
+          <div class="task-item">
+            <div class="task-dot andamento"></div>
+            <div class="task-content">
+              <div class="t-name">Definição da agenda macro</div>
+              <div class="t-fase">Estratégia · Planejamento Inicial</div>
+            </div>
+            <div class="task-status andamento">Andamento</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot andamento"></div>
+            <div class="task-content">
+              <div class="t-name">Monitoramento dos pagamentos</div>
+              <div class="t-fase">Venue · Contrato &amp; Pagamentos</div>
+            </div>
+            <div class="task-status andamento">Andamento</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot andamento"></div>
+            <div class="task-content">
+              <div class="t-name">Agenda final</div>
+              <div class="t-fase">Conteúdo · Agenda &amp; Palestrantes</div>
+            </div>
+            <div class="task-status andamento">Andamento</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot andamento"></div>
+            <div class="task-content">
+              <div class="t-name">Keynote / Estudos de caso</div>
+              <div class="t-fase">Conteúdo · Agenda &amp; Palestrantes</div>
+            </div>
+            <div class="task-status andamento">Andamento</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot andamento"></div>
+            <div class="task-content">
+              <div class="t-name">Convites e e-mail marketing</div>
+              <div class="t-fase">Comunicação · E-mail</div>
+            </div>
+            <div class="task-status andamento">Andamento</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot andamento"></div>
+            <div class="task-content">
+              <div class="t-name">LinkedIn e WhatsApp</div>
+              <div class="t-fase">Comunicação · Redes Sociais</div>
+            </div>
+            <div class="task-status andamento">Andamento</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot andamento"></div>
+            <div class="task-content">
+              <div class="t-name">Confirmar time Dewesoft no evento</div>
+              <div class="t-fase">Logística · Equipe Dewesoft</div>
+            </div>
+            <div class="task-status andamento">Andamento</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot aguardando"></div>
+            <div class="task-content">
+              <div class="t-name">Landing Page final e atualizações</div>
+              <div class="t-fase">Comunicação · Landing Page &amp; Forms</div>
+            </div>
+            <div class="task-status aguardando">Aguardando</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot aguardando"></div>
+            <div class="task-content">
+              <div class="t-name">E-mail confirmação de inscrição</div>
+              <div class="t-fase">Comunicação · E-mail</div>
+            </div>
+            <div class="task-status aguardando">Aguardando</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Próximos passos -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Próximos passos</div>
+        <div class="card-badge">A fazer</div>
+      </div>
+      <div class="card-body">
+        <div class="task-list">
+          <div class="task-item">
+            <div class="task-dot andamento"></div>
+            <div class="task-content">
+              <div class="t-name">Layouts das salas (auditório + 4 salas)</div>
+              <div class="t-fase">Venue · Espaço &amp; Layout</div>
+            </div>
+            <div class="task-status afazer">A fazer</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot afazer"></div>
+            <div class="task-content">
+              <div class="t-name">Definição e contratos de fornecedores</div>
+              <div class="t-fase">Venue · Fornecedores</div>
+            </div>
+            <div class="task-status afazer">A fazer</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot afazer"></div>
+            <div class="task-content">
+              <div class="t-name">Coleta de bios e fotos dos palestrantes</div>
+              <div class="t-fase">Conteúdo · Agenda &amp; Palestrantes</div>
+            </div>
+            <div class="task-status afazer">A fazer</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot afazer"></div>
+            <div class="task-content">
+              <div class="t-name">Projeto cenográfico e sinalização</div>
+              <div class="t-fase">Venue · Espaço &amp; Layout</div>
+            </div>
+            <div class="task-status afazer">A fazer</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot afazer"></div>
+            <div class="task-content">
+              <div class="t-name">Definição de brindes, crachás, banners</div>
+              <div class="t-fase">Produção · Materiais</div>
+            </div>
+            <div class="task-status afazer">A fazer</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot afazer"></div>
+            <div class="task-content">
+              <div class="t-name">Equipe de staffing e escala</div>
+              <div class="t-fase">Logística · Staffing</div>
+            </div>
+            <div class="task-status afazer">A fazer</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot afazer"></div>
+            <div class="task-content">
+              <div class="t-name">Comunicação pós-inscrição (reminders)</div>
+              <div class="t-fase">Comunicação · Inscritos</div>
+            </div>
+            <div class="task-status afazer">A fazer</div>
+          </div>
+          <div class="task-item">
+            <div class="task-dot afazer"></div>
+            <div class="task-content">
+              <div class="t-name">Reunião geral de alinhamento</div>
+              <div class="t-fase">Alinhamento · Confirmações Finais</div>
+            </div>
+            <div class="task-status afazer">A fazer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</div>
+
+<script>
+// ##DADOS_INICIO##
+window.DWS_DADOS = {
+  checklist: {
+    total:      220,
+    concluidos: 18,
+    andamento:  13,
+    aguardando: 2,
+    aFazer:     52,
+    cancelado:  1
+  },
+  budget: {
+    salas:   33300,
+    alim:    153800,
+    hosp:    6960,
+    extras:  4666,
+    total:   198726,
+    sinal:   41650
+  },
+  inscricoes: {
+    total:      14,
+    meta:       150,
+    coquetel:   13,
+    restricoes: 1
+  }
+};
+// ##DADOS_FIM##
+</script>
+<script>
+// ── Aplica dados ──
+function aplicarDados() {
+  const D = window.DWS_DADOS;
+
+  // — Inscritos —
+  const insc = D.inscricoes;
+  document.getElementById('kpi-inscritos-val').textContent   = insc.total + ' / ' + insc.meta;
+  document.getElementById('kpi-inscritos-pct').textContent   = ((insc.total / insc.meta) * 100).toFixed(1) + '% atingido';
+  document.getElementById('kpi-inscritos-rest').textContent  = (insc.meta - insc.total) + ' vagas restantes';
+  document.getElementById('kpi-inscritos-bar').style.width   = ((insc.total / insc.meta) * 100).toFixed(1) + '%';
+  document.getElementById('insc-coquetel').textContent       = insc.coquetel;
+  document.getElementById('insc-restricoes').textContent     = insc.restricoes;
+
+  // — Budget —
+  const b = D.budget;
+  const fmt = n => Math.round(n).toLocaleString('pt-BR');
+  document.getElementById('kpi-orcamento-val').textContent   = 'R$ ' + fmt(b.total);
+  document.getElementById('kpi-sinal-val').textContent       = 'R$ ' + fmt(b.sinal);
+  document.getElementById('b-salas-val').textContent         = 'R$ ' + fmt(b.salas);
+  document.getElementById('b-alim-val').textContent          = 'R$ ' + fmt(b.alim);
+  document.getElementById('b-hosp-val').textContent          = 'R$ ' + fmt(b.hosp);
+  document.getElementById('b-extras-val').textContent        = 'R$ ' + fmt(b.extras);
+  document.getElementById('b-total-val').textContent         = 'R$ ' + fmt(b.total);
+  document.getElementById('b-sinal-val').textContent         = 'R$ ' + fmt(b.sinal);
+  // barras proporcionais
+  const pct = v => b.total > 0 ? ((v / b.total) * 100).toFixed(1) + '%' : '0%';
+  document.getElementById('b-salas-bar').style.width   = pct(b.salas);
+  document.getElementById('b-alim-bar').style.width    = pct(b.alim);
+  document.getElementById('b-hosp-bar').style.width    = pct(b.hosp);
+  document.getElementById('b-extras-bar').style.width  = pct(b.extras);
+
+  // — Checklist —
+  const c = D.checklist;
+  document.getElementById('cl-total').textContent      = c.total + ' itens';
+  document.getElementById('cl-concluidos').textContent = c.concluidos;
+  document.getElementById('cl-andamento').textContent  = c.andamento;
+  document.getElementById('cl-aguardando').textContent = c.aguardando;
+  document.getElementById('cl-afazer').textContent     = c.aFazer;
+  document.getElementById('cl-cancelado').textContent  = c.cancelado;
+  // barra proporcional
+  const tp = c.total || 1;
+  document.getElementById('bar-concluidos').style.width = (c.concluidos / tp * 100).toFixed(1) + '%';
+  document.getElementById('bar-andamento').style.width  = (c.andamento  / tp * 100).toFixed(1) + '%';
+  document.getElementById('bar-aguardando').style.width = (c.aguardando / tp * 100).toFixed(1) + '%';
+  document.getElementById('bar-cancelado').style.width  = (c.cancelado  / tp * 100).toFixed(1) + '%';
+  document.getElementById('bar-afazer').style.width     = (c.aFazer     / tp * 100).toFixed(1) + '%';
+  const pctConc = Math.round(c.concluidos / tp * 100);
+  document.getElementById('cl-pct-label').textContent  = pctConc + '% concluído · ' + (tp - c.concluidos - c.andamento - c.aguardando - c.cancelado) + ' sem status';
+}
+aplicarDados();
+</script>
+<script>
+// ── Countdown ──
+function tick(){
+  const evt   = new Date('2026-09-29T08:00:00-03:00');
+  const now   = new Date();
+  const diff  = evt - now;
+  const d     = diff > 0 ? Math.floor(diff / 86400000) : 0;
+  document.getElementById('cd-dias').textContent = d;
+}
+tick();
+setInterval(tick, 60000);
+</script>
+</body>
+</html>
+
+
